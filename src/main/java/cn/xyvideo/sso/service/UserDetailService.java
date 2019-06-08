@@ -1,5 +1,6 @@
 package cn.xyvideo.sso.service;
 
+import cn.xyvideo.sso.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,9 +18,15 @@ public class UserDetailService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user=new User("dysoft",passwordEncoder.encode("Dysoft520"), Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        UserInfo userInfo = this.userService.getUserByName(username);
+        if(userInfo==null)
+            throw new UsernameNotFoundException("用户名或密码不正确!");
+        User user=new User(userInfo.getUsername(),userInfo.getPassword(),Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
         return user;
     }
 }
