@@ -1,5 +1,6 @@
 package cn.xyvideo.sso.config;
 
+import cn.xyvideo.sso.hendler.AuthenticationFailureHandler;
 import cn.xyvideo.sso.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailService userDetailService;
 
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder);
@@ -32,10 +36,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login","/","/assets/**").permitAll()
+                .antMatchers("/login","/assets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login")
+                .failureHandler(authenticationFailureHandler)
                 .and()
                 .logout().permitAll();
     }

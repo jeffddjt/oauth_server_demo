@@ -15,10 +15,10 @@ public class Startup extends SpringBootServletInitializer {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    public void init(){
-        this.userService.init();
-    }
+//    @Autowired
+//    public void init(){
+//        this.userService.init();
+//    }
 
 
 }

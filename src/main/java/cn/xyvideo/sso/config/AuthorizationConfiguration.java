@@ -48,7 +48,7 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
     @Bean
     public JwtAccessTokenConverter accessTokenConverter(){
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("DySoftOAUTHSERVER");
+        converter.setSigningKey("XYVIDEOOAUTHSERVERSIGNKEY");
         return converter;
     }
 
