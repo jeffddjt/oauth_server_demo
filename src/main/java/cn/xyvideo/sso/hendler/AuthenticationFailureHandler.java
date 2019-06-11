@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @Component
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -17,7 +18,7 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        String msg=exception.getMessage();
-        response.sendRedirect("/login?error="+exception.getMessage());
+        String error=URLEncoder.encode(exception.getMessage(),"utf-8");
+        response.sendRedirect("/login?error="+error);
     }
 }
