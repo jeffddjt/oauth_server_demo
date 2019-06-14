@@ -39,6 +39,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login","/assets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .headers().frameOptions().disable()
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .failureHandler(authenticationFailureHandler)

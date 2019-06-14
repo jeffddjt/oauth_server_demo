@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+</head>
+<body>
+            <div class="operation_button_box">
+                <input type="button" value="新增用户"/>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th style="width:80px">编号</th>
+                    <th style="width:100px">用户名</th>
+                    <th style="width:150px">姓名</th>
+                    <th style="width:200px">电话</th>
+                    <th>邮箱</th>
+                    <th style="width: 100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${pager.content}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.username}"></td>
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.telno}"></td>
+                    <td th:text="${item.email}"></td>
+                    <td>
+                        <div  class="operation">
+                            <a th:href="'edit?id='+${item.id}">修改</a>
+                            <a th:href="'delete?id='+${item.id}">删除</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pager">
+                <span><span th:text="${pager.pageable.pageNumber+1}"></span>/<span th:text="${pager.totalPages}"></span></span>
+                <ul class="pager_nums">
+                    <li>
+                        <input type="button" value="|<" th:disabled="${pager.first}" onclick="location.href='/userManage?pageNo=1'"/>
+                    </li>
+                    <li>
+                        <input type="button" value="<" th:disabled="${pager.first}" th:onclick="'location.href=\'/userManage?pageNo='+${pager.pageable.pageNumber}+'\''"></input>
+                    </li>
+                    <li th:class="${i==pager.pageable.pageNumber+1?'cur':''}" th:each="i : ${#numbers.sequence(1,pager.totalPages,1)}">
+                        <a th:href="'/userManage?pageNo='+${i}" th:text="${i}"></a>
+                    </li>
+                    <li>
+                        <input type="button" value=">" th:disabled="${pager.last}" th:onclick="'location.href=\'/userManage?pageNo='+${pager.pageable.pageNumber+1}+'\''"/>
+                    </li>
+                    <li>
+                        <input type="button" value=">|" th:disabled="${pager.last}" th:onclick="'location.href=\'/userManage?pageNo='+${pager.totalPages}+'\''"/>
+                    </li>
+                </ul>
+            </div>
+</body>
+</html>
