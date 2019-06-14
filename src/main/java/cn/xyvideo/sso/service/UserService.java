@@ -28,13 +28,21 @@ public class UserService {
     }
 
     public void init() {
-        UserInfo user=new UserInfo();
-        user.setUsername("admin");
-        user.setPassword(this.passwordEncode().encode("admin"));
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        role = this.roleRepository.save(role);
-        user.setRoles(Arrays.asList(role));
-        this.userRepository.save(user);
+
+        if(!this.userRepository.existsByUsername("admin")) {
+            UserInfo user = new UserInfo();
+            user.setUsername("admin");
+            user.setPassword(this.passwordEncode().encode("admin"));
+            Role role = null;
+            if(!this.roleRepository.existsByName('ROLE_ADMIN')) {
+                role = new Role();
+                role.setName("ROLE_ADMIN");
+                role = this.roleRepository.save(role);
+            }else{
+                role=this.roleRepository.findByName("ROLE_ADMIN");
+            }
+            user.setRoles(Arrays.asList(role));
+            this.userRepository.save(user);
+        }
     }
 }
