@@ -34,7 +34,7 @@ public class UserService {
             user.setUsername("admin");
             user.setPassword(this.passwordEncode().encode("admin"));
             Role role = null;
-            if(!this.roleRepository.existsByName('ROLE_ADMIN')) {
+            if(!this.roleRepository.existsByName("ROLE_ADMIN")) {
                 role = new Role();
                 role.setName("ROLE_ADMIN");
                 role = this.roleRepository.save(role);
