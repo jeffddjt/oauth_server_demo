@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="header">用户管理系统</div>
+    <div class="seprate_h"></div>
+    <div class="middle">
+        <div class="left">
+            <ul>
+                <li>系统看板</li>
+                <li>用户管理</li>
+                <li>角色管理</li>
+            </ul>
+        </div>
+        <div class="seprate_v"></div>
+    <div class="table_box">
+    <table>
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>用户名</th>
+                <th>姓名</th>
+                <th>电话</th>
+                <th>邮箱</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${userList}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.username}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.telno}"></td>
+                <td th:text="${item.email}"></td>
+                <td>
+                    <div  class="operation">
+                    <a th:href="'edit?id='+${item.id}">修改</a>
+                    <a th:href="'delete?id='+${item.id}">删除</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+</div>
+</body>
+</html>
