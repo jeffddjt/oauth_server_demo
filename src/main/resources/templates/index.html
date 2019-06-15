@@ -7,8 +7,124 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>用户管理系统</title>
     <link rel="stylesheet" href="assets/css/main.css"/>
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        var user={
+            username:"",
+            name:"",
+            password:"",
+            telno:"",
+            email:""
+        };
+        var addUserCallback=function(data){};
+        window.dialog=function(callback){
+            $(".mask").show();
+            $("#username").focus();
+            addUserCallback=callback;
+        }
+        function cancel(){
+            $(".mask").hide();
+        }
+
+        function addUser() {
+
+            if($("#username").val().trim()!=""){
+                user.username=$("#username").val().trim();
+            }else{
+                alert("请输入用户名!");
+                $("#username").focus();
+                return;
+            }
+            if($("#name").val().trim()!=""){
+                user.name=$("#name").val().trim();
+            }else{
+                alert("请输入姓名!");
+                $("#name").focus();
+                return;
+            }
+            if($("#password").val().trim()!=""){
+                if($("#verifyPassword").val().trim()==$("#password").val().trim()) {
+                    user.password = $("#password").val().trim();
+                }else
+                {
+                    alert("两次输入的密码不一致!");
+                    $("#verifyPassword").focus();
+                    return;
+                }
+            }else{
+                alert("请输入密码!");
+                $("#password").focus();
+                return;
+            }
+
+            user.telno=$("#telno").val().trim();
+            user.email=$("#email").val().trim();
+
+            $(".mask").hide();
+            addUserCallback(user);
+        }
+    </script>
 </head>
 <body>
+<div class="mask">
+    <div class="dialog">
+        <div class="dialog_title">新增用户</div>
+        <div class="dialog_content">
+            <ul>
+                <li>
+                    <span class="label">用户名</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="username"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">姓名</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="name"/>
+                    </div>
+                </li>                <li>
+                        <span class="label">密码</span>
+                    <span>:</span>
+                    <div>
+                        <input type="password" id="password"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">确认密码</span>
+                    <span>:</span>
+                    <div>
+                        <input type="password" id="verifyPassword" />
+                    </div>
+                </li>
+                <li>
+                    <span class="label">电话</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="telno"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">邮箱</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="email"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dialog_footer">
+            <input type="button" value="确定" onclick="addUser()"/>
+            <input type="button" value="取消" onclick="cancel()"/>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div class="container">
     <div class="header">
         <span class="title">用户管理系统</span>
@@ -31,9 +147,10 @@
                 <a href="#">用户管理</a>
             </div>
         </div>
-        <iframe src="/userManage" scrolling="no"/>
+        <iframe src="/userManage" scrolling="no" id="main_content"/>
     </div>
     </div>
 </div>
+
 </body>
 </html>

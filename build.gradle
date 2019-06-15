@@ -31,6 +31,7 @@ dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.1.5.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.5.RELEASE'
+    compile group: 'org.webjars', name: 'jquery', version: '3.4.1'
 
 
 

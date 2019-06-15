@@ -7,10 +7,27 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>用户管理系统</title>
     <link rel="stylesheet" href="assets/css/main.css"/>
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function newUser() {
+            parent.window.dialog(function(data){
+                $.ajax({
+                   url:"User/add",
+                   type:"post",
+                   data:data,
+                   success:function(res){
+                       location.reload();
+                   } ,
+                    error:function(res){
+                    }
+                });
+            });
+        }
+    </script>
 </head>
 <body>
             <div class="operation_button_box">
-                <input type="button" value="新增用户"/>
+                <input type="button" value="新增用户" onclick="newUser()"/>
             </div>
             <table>
                 <thead>
@@ -19,7 +36,8 @@
                     <th style="width:100px">用户名</th>
                     <th style="width:150px">姓名</th>
                     <th style="width:200px">电话</th>
-                    <th>邮箱</th>
+                    <th style="width: 200px;">邮箱</th>
+                    <th></th>
                     <th style="width: 100px;">操作</th>
                 </tr>
                 </thead>
@@ -30,6 +48,7 @@
                     <td th:text="${item.name}"></td>
                     <td th:text="${item.telno}"></td>
                     <td th:text="${item.email}"></td>
+                    <td></td>
                     <td>
                         <div  class="operation">
                             <a th:href="'edit?id='+${item.id}">修改</a>

@@ -59,4 +59,10 @@ public class UserService {
         Pageable pageable = new PageRequest(pageNo-1,pageSize,sort);
         return this.userRepository.findAll(pageable);
     }
+
+    public Object add(UserInfo userInfo) {
+        userInfo.setPassword(this.passwordEncode().encode(userInfo.getPassword()));
+        return this.userRepository.save(userInfo);
+
+    }
 }
