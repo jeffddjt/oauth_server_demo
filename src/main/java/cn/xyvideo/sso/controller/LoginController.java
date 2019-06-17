@@ -8,8 +8,7 @@ import org.thymeleaf.util.StringUtils;
 @Controller
 public class LoginController {
 
-    @GetMapping("login")
-//    @ResponseBody
+    @GetMapping("/login")
     public String login(String error, Model model){
         if(!StringUtils.isEmpty(error))
             model.addAttribute("error","用户名或密码不正确!");

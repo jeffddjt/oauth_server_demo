@@ -15,9 +15,9 @@ public class ResourceServer extends ResourceServerConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .requestMatchers()
-                .antMatchers("/User/me")
+                .antMatchers("/User/me","/api/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/User/me").authenticated();
+                .antMatchers("/User/me","/api/**").authenticated();
     }
 }

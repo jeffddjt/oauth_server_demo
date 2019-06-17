@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
@@ -15,11 +15,11 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String index(){
+//    @GetMapping("/")
+//    public String index(){
+//        return "index";
+//    }
 
-        return "index";
-    }
     @GetMapping("userManage")
     public String userManage(String pageNo,Model model){
 
@@ -32,6 +32,12 @@ public class HomeController {
         Page<UserInfo> pager = this.userService.getAllPager(page,20);
         model.addAttribute("pager",pager);
         return "user";
+    }
+
+    @GetMapping("getall")
+    @ResponseBody
+    public Object getAll(){
+        return this.userService.getAll();
     }
 
 
