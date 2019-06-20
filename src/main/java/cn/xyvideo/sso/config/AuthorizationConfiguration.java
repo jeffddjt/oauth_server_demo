@@ -1,8 +1,14 @@
 package cn.xyvideo.sso.config;
 
+import cn.xyvideo.sso.model.OauthClient;
+import cn.xyvideo.sso.service.ClientDetailService;
+import cn.xyvideo.sso.service.ClientService;
+import com.mysql.cj.xdevapi.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,9 +17,17 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.ClientRegistrationException;
+import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 
 @Configuration
@@ -23,14 +37,28 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private ClientDetailService clientDetailsService;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("client2").secret(this.passwordEncoder().encode("secret")).scopes("read","write")
-                .authorizedGrantTypes("password","authorization_code","refresh_token")
-                .accessTokenValiditySeconds(3600)
-                .refreshTokenValiditySeconds(25920000);
+//        clients.inMemory()
+////                .withClient("client2").secret(this.passwordEncoder().encode("secret")).scopes("read","write")
+////                .autoApprove(true)
+////                .redirectUris("http://localhost:9090/login")
+////                .authorizedGrantTypes("password","authorization_code","refresh_token")
+////                .accessTokenValiditySeconds(3600)
+////                .refreshTokenValiditySeconds(25920000);
+
+
+        clients.withClientDetails(clientDetailsService);
     }
+
+
+
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -61,5 +89,6 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 
 }

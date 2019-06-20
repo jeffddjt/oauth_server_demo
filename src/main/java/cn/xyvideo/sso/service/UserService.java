@@ -38,6 +38,9 @@ public class UserService {
             UserInfo user = new UserInfo();
             user.setUsername("admin");
             user.setPassword(this.passwordEncode().encode("admin"));
+            user.setName("管理员");
+            user.setTelno("13888888888");
+            user.setEmail("mail@email.com");
             Role role = null;
             if(!this.roleRepository.existsByName("ROLE_ADMIN")) {
                 role = new Role();
