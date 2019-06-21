@@ -116,7 +116,7 @@ a{
     letter-spacing: 3px;
     transition: background-color 0.5s;
 }
-.menu li:hover{
+.menu li:hover,.active{
     background: rgba(255,255,255,0.3);
     font-weight: 700;
 }
@@ -221,15 +221,10 @@ iframe{
 }
 
 .dialog{
-    margin: 0 auto;
-    width: 50vh;
-    height: 50vh;
-    margin-top: 25vh;
     background:#fff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -238,8 +233,6 @@ iframe{
 .dialog_title{
     height: 40px;
     background: #299498;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     display: flex;
     padding-left: 10px;
     color: #ffffff;
@@ -261,7 +254,7 @@ iframe{
     height:calc(100% - 140px);
 
 }
-.dialog_footer input[type="button"]{
+.dialog_footer input[type="button"],.dialog_footer input[type="submit"]{
     height:30px;
     width:80px;
     border:1px solid #28a745;
@@ -316,5 +309,7 @@ iframe{
     padding-left:10px;
     padding-right: 10px;
     font-size: 1rem;
-;
+}
+form{
+    width:100%;
 }

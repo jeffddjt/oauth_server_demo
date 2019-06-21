@@ -10,18 +10,24 @@
     <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
     <script>
         function newUser() {
-            parent.window.dialog(function(data){
+            location.href="addUser";
+
+        }
+
+        function deleteUser(id) {
+            if(confirm("确定要删除该用户吗?")){
                 $.ajax({
-                   url:"User/add",
-                   type:"post",
-                   data:data,
-                   success:function(res){
-                       location.reload();
-                   } ,
-                    error:function(res){
-                    }
+                    url:"deleteUser",
+                    data:{id:id},
+                    type:"post",
+                        success:function (res) {
+                        alert(res.message);
+                        if(res.code!=0){
+                            location.reload();
+                        }
+                }
                 });
-            });
+            }
         }
     </script>
 </head>
@@ -51,8 +57,8 @@
                     <td></td>
                     <td>
                         <div  class="operation">
-                            <a th:href="'edit?id='+${item.id}">修改</a>
-                            <a th:href="'delete?id='+${item.id}">删除</a>
+                            <a th:href="'modifyUser?id='+${item.id}">修改</a>
+                            <a href="#" th:onclick="'deleteUser('+${item.id}+')'">删除</a>
                         </div>
                     </td>
                 </tr>

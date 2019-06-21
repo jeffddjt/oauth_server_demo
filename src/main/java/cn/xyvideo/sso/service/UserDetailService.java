@@ -32,9 +32,9 @@ public class UserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("用户名或密码不正确!");
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(Role role : userInfo.getRoles()){
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
+        if(userInfo.getRole()!=null)
+            authorities.add(new SimpleGrantedAuthority(userInfo.getRole().getCode()));
+
 
         User user=new User(userInfo.getUsername(),userInfo.getPassword(),authorities);
         return user;

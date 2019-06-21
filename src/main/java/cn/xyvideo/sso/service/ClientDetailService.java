@@ -31,6 +31,8 @@ public class ClientDetailService implements ClientDetailsService {
         clientDetails.setRegisteredRedirectUri(new HashSet<>(Arrays.asList(client.getRedirectUrl().split(","))));
         clientDetails.setAuthorizedGrantTypes(Arrays.asList(client.getGrantType().split(",")));
         clientDetails.setScope(Arrays.asList(client.getScope().split(",")));
+        clientDetails.setAccessTokenValiditySeconds(3600);
+        clientDetails.setRefreshTokenValiditySeconds(25920000);
         clientDetails.setAutoApproveScopes(Arrays.asList("read","write"));
         return clientDetails;
     }

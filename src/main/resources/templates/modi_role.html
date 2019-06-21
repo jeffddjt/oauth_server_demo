@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function cancel(){
+            location.href="/role/manage";
+        }
+
+        function checkForm() {
+
+            if($("#code").val().trim()==""){
+                alert("请输入角色代码!");
+                $("#code").focus();
+                return false;
+            }
+            if($("#name").val().trim()==""){
+                alert("请输入角色名称!");
+                $("#name").focus();
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="dialog">
+        <form action="modify" method="post" onsubmit="return checkForm()">
+        <div class="dialog_title">新增用户</div>
+        <div class="dialog_content">
+            <ul>
+                <li>
+                    <span class="label">角色代码</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="code" name="code" th:value="${role.code}"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">角色名称</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="name" name="name" th:value="${role.name}"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dialog_footer">
+            <input type="hidden" name="id" th:value="${role.id}"/>
+            <input type="submit" value="确定"/>
+            <input type="button" value="取消" onclick="cancel()"/>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

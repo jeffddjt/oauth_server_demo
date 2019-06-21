@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function newUser() {
+            location.href="add";
+        }
+        function remove(id){
+            if (confirm("确定要删除该用户吗?")) {
+                $.ajax({
+                    url: "delete",
+                    data: {id: id},
+                    type: "post",
+                    success: function (res) {
+                        alert(res.message);
+                        if (res.code != 0) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        }
+
+        function getMember(id) {
+            $.ajax({
+               url:"getMember",
+               data:{id:id},
+               type:"post",
+               success:function(res){
+                   var s="";
+                   $(res).each(function(index,item){
+                       s+="<tr>";
+                       s+="<td>"+item.id+"</td>";
+                       s+="</tr>";
+                   });
+                   $("#memberList").empty().append(s);
+               }
+            });
+        }
+    </script>
+</head>
+<body>
+            <div class="operation_button_box">
+                <input type="button" value="新增角色" onclick="newUser()"/>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th style="width:80px">编号</th>
+                    <th style="width:100px">角色代码</th>
+                    <th style="width:150px">角色名称</th>
+                    <th></th>
+                    <th style="width: 100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${roles}" th:onclick="'getMember('+${item.id}+')'">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.code}"></td>
+                    <td th:text="${item.name}"></td>
+                    <td></td>
+                    <td>
+                        <div  class="operation">
+                            <a th:href="'modify?id='+${item.id}">修改</a>
+                            <a href="#" th:onclick="'remove('+${item.id}+')'">删除</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <div id="member">
+            <div style="height:40px;line-height: 40px;padding-left:10px;font-size:0.9rem;">成员列表</div>
+            <div class="operation_button_box">
+                <input type="button" value="添加成员" onclick="newUser()"/>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th style="width:80px">编号</th>
+                    <th style="width:100px">用户名</th>
+                    <th style="width:150px">姓名</th>
+                    <th style="width:200px">电话</th>
+                    <th style="width: 200px;">邮箱</th>
+                    <th></th>
+                    <th style="width: 100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody id="memberList">
+<!--                <tr th:each="item : ${pager.content}">-->
+<!--                    <td th:text="${item.id}"></td>-->
+<!--                    <td th:text="${item.username}"></td>-->
+<!--                    <td th:text="${item.name}"></td>-->
+<!--                    <td th:text="${item.telno}"></td>-->
+<!--                    <td th:text="${item.email}"></td>-->
+<!--                    <td></td>-->
+<!--                    <td>-->
+<!--                        <div  class="operation">-->
+<!--                            <a th:href="'modifyUser?id='+${item.id}">移除</a>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+                </tbody>
+            </table>
+            </div>
+
+</body>
+</html>

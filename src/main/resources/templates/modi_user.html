@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function cancel(){
+            location.href="userManage";
+        }
+
+        function checkForm() {
+
+            if($("#username").val().trim()==""){
+                alert("请输入用户名!");
+                $("#username").focus();
+                return false;
+            }
+            if($("#name").val().trim()==""){
+                alert("请输入姓名!");
+                $("#name").focus();
+                return false;
+            }
+            if($("#password").val().trim()!="") {
+                if ($("#verifyPassword").val().trim() != $("#password").val().trim()) {
+                    alert("两次输入的密码不一致!");
+                    $("#verifyPassword").focus();
+                    return false;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="dialog">
+        <form action="modifyUser" method="post" onsubmit="return checkForm()">
+        <div class="dialog_title">新增用户</div>
+        <div class="dialog_content">
+            <ul>
+                <li>
+                    <span class="label">用户名</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="username" name="username" th:value="${user.username}"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">姓名</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="name" name="name" th:value="${user.name}"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">密码</span>
+                    <span>:</span>
+                    <div>
+                        <input type="password" id="password" name="password"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">确认密码</span>
+                    <span>:</span>
+                    <div>
+                        <input type="password" id="verifyPassword"  />
+                    </div>
+                </li>
+                <li>
+                    <span class="label">电话</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="telno" name="telno" th:value="${user.telno}"/>
+                    </div>
+                </li>
+                <li>
+                    <span class="label">邮箱</span>
+                    <span>:</span>
+                    <div>
+                        <input type="text" id="email" name="email" th:value="${user.email}"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dialog_footer">
+            <input type="hidden" name="id" th:value="${user.id}"/>
+            <input type="submit" value="确定" onclick="addUser()"/>
+            <input type="button" value="取消" onclick="cancel()"/>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

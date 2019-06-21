@@ -27,103 +27,16 @@
             $(".mask").hide();
         }
 
-        function addUser() {
+        function changeTo(obj,url){
+            $("#main_content").attr("src",url);
+            $("#siteTitle").text($(obj).text());
+            $(obj).addClass("active").siblings().removeClass("active");
 
-            if($("#username").val().trim()!=""){
-                user.username=$("#username").val().trim();
-            }else{
-                alert("请输入用户名!");
-                $("#username").focus();
-                return;
-            }
-            if($("#name").val().trim()!=""){
-                user.name=$("#name").val().trim();
-            }else{
-                alert("请输入姓名!");
-                $("#name").focus();
-                return;
-            }
-            if($("#password").val().trim()!=""){
-                if($("#verifyPassword").val().trim()==$("#password").val().trim()) {
-                    user.password = $("#password").val().trim();
-                }else
-                {
-                    alert("两次输入的密码不一致!");
-                    $("#verifyPassword").focus();
-                    return;
-                }
-            }else{
-                alert("请输入密码!");
-                $("#password").focus();
-                return;
-            }
 
-            user.telno=$("#telno").val().trim();
-            user.email=$("#email").val().trim();
-
-            $(".mask").hide();
-            addUserCallback(user);
         }
     </script>
 </head>
 <body>
-<div class="mask">
-    <div class="dialog">
-        <div class="dialog_title">新增用户</div>
-        <div class="dialog_content">
-            <ul>
-                <li>
-                    <span class="label">用户名</span>
-                    <span>:</span>
-                    <div>
-                        <input type="text" id="username"/>
-                    </div>
-                </li>
-                <li>
-                    <span class="label">姓名</span>
-                    <span>:</span>
-                    <div>
-                        <input type="text" id="name"/>
-                    </div>
-                </li>                <li>
-                        <span class="label">密码</span>
-                    <span>:</span>
-                    <div>
-                        <input type="password" id="password"/>
-                    </div>
-                </li>
-                <li>
-                    <span class="label">确认密码</span>
-                    <span>:</span>
-                    <div>
-                        <input type="password" id="verifyPassword" />
-                    </div>
-                </li>
-                <li>
-                    <span class="label">电话</span>
-                    <span>:</span>
-                    <div>
-                        <input type="text" id="telno"/>
-                    </div>
-                </li>
-                <li>
-                    <span class="label">邮箱</span>
-                    <span>:</span>
-                    <div>
-                        <input type="text" id="email"/>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="dialog_footer">
-            <input type="button" value="确定" onclick="addUser()"/>
-            <input type="button" value="取消" onclick="cancel()"/>
-        </div>
-    </div>
-</div>
-
-
-
 
 <div class="container">
     <div class="header">
@@ -134,9 +47,9 @@
     <div class="middle">
         <div class="left">
             <ul class="menu">
-                <li>系统看板</li>
-                <li>用户管理</li>
-                <li>角色管理</li>
+                <li class="active" onclick="changeTo(this,'userManage')">用户管理</li>
+                <li onclick="changeTo(this,'role/manage')">角色管理</li>
+                <li onclick="changeTo(this,'client/manage',)">客户端管理</li>
             </ul>
         </div>
         <div class="seprate_v"></div>
@@ -144,7 +57,7 @@
         <div class="table_header">
             <div class="sitemap">
                 <span>当前位置:</span>
-                <a href="#">用户管理</a>
+                <a href="#" id="siteTitle">用户管理</a>
             </div>
         </div>
         <iframe src="/userManage" scrolling="no" id="main_content"/>

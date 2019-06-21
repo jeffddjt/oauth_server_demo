@@ -45,15 +45,6 @@ public class AuthorizationConfiguration extends AuthorizationServerConfigurerAda
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.inMemory()
-////                .withClient("client2").secret(this.passwordEncoder().encode("secret")).scopes("read","write")
-////                .autoApprove(true)
-////                .redirectUris("http://localhost:9090/login")
-////                .authorizedGrantTypes("password","authorization_code","refresh_token")
-////                .accessTokenValiditySeconds(3600)
-////                .refreshTokenValiditySeconds(25920000);
-
-
         clients.withClientDetails(clientDetailsService);
     }
 

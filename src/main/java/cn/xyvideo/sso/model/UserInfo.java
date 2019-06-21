@@ -14,7 +14,6 @@ public class UserInfo extends EntityBase {
     private String name;
     private String email;
     private String telno;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
-
+    @ManyToOne
+    private Role role;
 }
