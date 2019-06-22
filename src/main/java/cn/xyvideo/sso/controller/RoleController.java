@@ -3,6 +3,7 @@ package cn.xyvideo.sso.controller;
 import cn.xyvideo.sso.model.Role;
 import cn.xyvideo.sso.model.UserInfo;
 import cn.xyvideo.sso.service.RoleService;
+import cn.xyvideo.sso.service.UserService;
 import cn.xyvideo.sso.utils.XYResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("manage")
     public String index(Model model){
@@ -64,7 +68,8 @@ public class RoleController {
     @ResponseBody
     public List<UserInfo> getMember(@RequestParam(name = "id",defaultValue = "0") long id){
         Role role=this.roleService.getById(id);
-        return role.getUserList();
+        List<UserInfo> members = this.userService.getAllByRoleId(role.getId());
+        return members;
 
     }
 }

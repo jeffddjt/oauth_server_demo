@@ -70,6 +70,15 @@
                     </div>
                 </li>
                 <li>
+                    <span class="label">角色</span>
+                    <span>:</span>
+                    <div>
+                        <select name="roleId">
+                            <option th:each="role : ${roleList}" th:value="${role.id}" th:text="${role.name}" th:selected="${user.roleId}==${role.id}?'true':'false'"></option>
+                        </select>
+                    </div>
+                </li>
+                <li>
                     <span class="label">电话</span>
                     <span>:</span>
                     <div>

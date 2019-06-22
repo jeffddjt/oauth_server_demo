@@ -284,12 +284,13 @@ iframe{
     align-items: center;
 }
 .dialog_content ul li .label{
-    width:80px;
+    width:110px;
     /*display: block;*/
     text-align: justify;
     text-align-last: justify;
     margin-right: 5px;
     font-weight: 600;
+    margin-left: 10px;
 }
 .dialog_content ul li div{
     width:100%;

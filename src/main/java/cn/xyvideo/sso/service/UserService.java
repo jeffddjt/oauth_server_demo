@@ -29,7 +29,11 @@ public class UserService {
     }
 
     public UserInfo getUserByName(String username){
-        return this.userRepository.findByUsername(username);
+        UserInfo user=this.userRepository.findByUsername(username);
+        if(user!=null&&user.getRoleId()!=0){
+            user.setRole(this.roleRepository.findById(user.getRoleId()).get());
+        }
+        return user;
     }
 
     public void init() {
@@ -48,17 +52,29 @@ public class UserService {
             }else{
                 role=this.roleRepository.findByCode("ROLE_ADMIN");
             }
-            user.setRole(role);
+            user.setRoleId(role.getId());
             this.userRepository.save(user);
         }
     }
     public List<UserInfo> getAll() {
-        return this.userRepository.findAll();
+        List<UserInfo> userInfos = this.userRepository.findAll();
+        for(UserInfo user : userInfos){
+            if(user!=null&&user.getRoleId()!=0){
+                user.setRole(this.roleRepository.findById(user.getRoleId()).get());
+            }
+        }
+        return userInfos;
     }
     public Page<UserInfo> getAllPager(int pageNo,int pageSize){
         Sort sort=new Sort(Sort.Direction.ASC,"id");
         Pageable pageable = new PageRequest(pageNo-1,pageSize,sort);
-        return this.userRepository.findAll(pageable);
+        Page<UserInfo> userInfos = this.userRepository.findAll(pageable);
+        for(UserInfo user : userInfos.getContent()){
+            if(user!=null&&user.getRoleId()!=0){
+                user.setRole(this.roleRepository.findById(user.getRoleId()).get());
+            }
+        }
+        return userInfos;
     }
 
     public Object add(UserInfo userInfo) {
@@ -68,7 +84,12 @@ public class UserService {
     }
 
     public UserInfo getById(long id) {
-        return this.userRepository.findById(id).get();
+        UserInfo user=this.userRepository.findById(id).get();
+        if(user!=null&&user.getRoleId()!=0){
+            user.setRole(this.roleRepository.findById(user.getRoleId()).get());
+        }
+
+        return user;
     }
 
     public void modifyUser(UserInfo userInfo) {
@@ -76,6 +97,7 @@ public class UserService {
         old.setName(userInfo.getName());
         old.setTelno(userInfo.getTelno());
         old.setEmail(userInfo.getEmail());
+        old.setRoleId(userInfo.getRoleId());
         if(!userInfo.getPassword().isEmpty()){
             old.setPassword(this.passwordEncode().encode(userInfo.getPassword()));
         }
@@ -85,5 +107,9 @@ public class UserService {
 
     public void deleteUser(long id) {
         this.userRepository.deleteById(id);
+    }
+
+    public List<UserInfo> getAllByRoleId(long id){
+        return this.userRepository.findAllByRoleId(id);
     }
 }

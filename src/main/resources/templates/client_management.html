@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户管理系统</title>
+    <link rel="stylesheet" href="/assets/css/main.css"/>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function newUser() {
+            location.href="add";
+        }
+        function remove(id){
+            if (confirm("确定要删除该客户端吗?")) {
+                $.ajax({
+                    url: "delete",
+                    data: {id: id},
+                    type: "post",
+                    success: function (res) {
+                        alert(res.message);
+                        if (res.code != 0) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+            <div class="operation_button_box">
+                <input type="button" value="新增客户端" onclick="newUser()"/>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th style="width:80px">编号</th>
+                    <th>客户端ID</th>
+                    <th>密钥Key</th>
+                    <th>范围</th>
+                    <th>授权类型</th>
+                    <th>重定向地址</th>
+                    <th style="width: 100px;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${clients}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.clientId}"></td>
+                    <td th:text="${item.clientSecret}"></td>
+                    <td th:text="${item.scope}"></td>
+                    <td th:text="${item.grantType}"></td>
+                    <td th:text="${item.redirectUrl}"></td>
+                    <td>
+                        <div  class="operation">
+                            <a th:href="'modify?id='+${item.id}">修改</a>
+                            <a href="#" th:onclick="'remove('+${item.id}+')'">删除</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+</body>
+</html>

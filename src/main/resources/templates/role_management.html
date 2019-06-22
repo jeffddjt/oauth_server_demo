@@ -13,7 +13,7 @@
             location.href="add";
         }
         function remove(id){
-            if (confirm("确定要删除该用户吗?")) {
+            if (confirm("确定要删除该角色吗?")) {
                 $.ajax({
                     url: "delete",
                     data: {id: id},
@@ -38,7 +38,10 @@
                    $(res).each(function(index,item){
                        s+="<tr>";
                        s+="<td>"+item.id+"</td>";
-                       s+="</tr>";
+                       s+="<td>"+item.username+"</td>";
+                       s+="<td>"+item.name+"</td>";
+                       s+="<td>"+item.telno+"</td>";
+                       s+="<td>"+item.email+"</td>";
                    });
                    $("#memberList").empty().append(s);
                }
@@ -78,9 +81,6 @@
             </div>
             <div id="member">
             <div style="height:40px;line-height: 40px;padding-left:10px;font-size:0.9rem;">成员列表</div>
-            <div class="operation_button_box">
-                <input type="button" value="添加成员" onclick="newUser()"/>
-            </div>
             <table>
                 <thead>
                 <tr>
@@ -89,24 +89,9 @@
                     <th style="width:150px">姓名</th>
                     <th style="width:200px">电话</th>
                     <th style="width: 200px;">邮箱</th>
-                    <th></th>
-                    <th style="width: 100px;">操作</th>
                 </tr>
                 </thead>
                 <tbody id="memberList">
-<!--                <tr th:each="item : ${pager.content}">-->
-<!--                    <td th:text="${item.id}"></td>-->
-<!--                    <td th:text="${item.username}"></td>-->
-<!--                    <td th:text="${item.name}"></td>-->
-<!--                    <td th:text="${item.telno}"></td>-->
-<!--                    <td th:text="${item.email}"></td>-->
-<!--                    <td></td>-->
-<!--                    <td>-->
-<!--                        <div  class="operation">-->
-<!--                            <a th:href="'modifyUser?id='+${item.id}">移除</a>-->
-<!--                        </div>-->
-<!--                    </td>-->
-<!--                </tr>-->
                 </tbody>
             </table>
             </div>

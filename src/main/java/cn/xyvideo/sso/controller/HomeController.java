@@ -1,6 +1,7 @@
 package cn.xyvideo.sso.controller;
 
 import cn.xyvideo.sso.model.UserInfo;
+import cn.xyvideo.sso.service.RoleService;
 import cn.xyvideo.sso.service.UserService;
 import cn.xyvideo.sso.utils.XYResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
 //    @GetMapping("/")
 //    public String index(){
@@ -41,6 +45,7 @@ public class HomeController {
     @GetMapping("addUser")
     public String addUser(Model model){
         model.addAttribute("action","addUser");
+        model.addAttribute("roleList",this.roleService.getList());
         return "add_user";
     }
 
@@ -61,6 +66,7 @@ public class HomeController {
     public String modifyUser(@RequestParam(name = "id",defaultValue = "0") long id,Model model){
         UserInfo userInfo = this.userService.getById(id);
         model.addAttribute("user",userInfo);
+        model.addAttribute("roleList",this.roleService.getList());
         return "modi_user";
     }
 

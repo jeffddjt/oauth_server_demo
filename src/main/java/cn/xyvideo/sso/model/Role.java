@@ -1,10 +1,12 @@
 package cn.xyvideo.sso.model;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Entity
@@ -12,8 +14,6 @@ import java.util.List;
 public class Role extends EntityBase {
     private String code;
     private String name;
-    @OneToMany
-    private List<UserInfo> userList;
 
     public Role(){
         super();

@@ -1,5 +1,6 @@
 package cn.xyvideo.sso.model;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class UserInfo extends EntityBase {
     private String name;
     private String email;
     private String telno;
-    @ManyToOne
+    @Transient
     private Role role;
+    private long roleId;
 }
